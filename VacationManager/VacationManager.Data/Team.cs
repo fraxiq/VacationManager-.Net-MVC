@@ -9,17 +9,16 @@ namespace VacationManager.Data
     {
         public Team()
         {
-            this.Users = new HashSet<ApplicationUser>();
-            this.Projects = new HashSet<Project>();
+            this.Developers = new HashSet<ApplicationUser>();
+            
         }
 
         [Key]
-        public int ID { get; set; }
-        public virtual ICollection<ApplicationUser> Users { get; set; }
-        public virtual ICollection<Project> Projects { get; set; }
+        public int ID { get; set; }     
         public string TeamName { get; set; }
-        
-
+        public virtual ICollection<ApplicationUser> Developers { get; set; }
+        public virtual ApplicationUser TeamLead { get; set; }
+        public virtual Project Project { get; set; }
 
     }
 }

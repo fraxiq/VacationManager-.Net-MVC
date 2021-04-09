@@ -14,11 +14,9 @@ namespace VacationManager.Data
         }
 
         [Key]
-        public int ID { get; set; }
-        public virtual ICollection<Team> Teams { get; set; }
-        //public List<Team> Teams { get; set; }
+        public int ID { get; set; }          
         public string ProjectName { get; set; }
         public string Description { get; set; }
-
+        public virtual ICollection<Team> Teams { get; set; }
     }
 }
