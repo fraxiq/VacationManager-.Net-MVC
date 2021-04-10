@@ -1,0 +1,45 @@
+﻿@model VacationManager.Web.Models.TeamViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Team</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Team.TeamName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Team.TeamName)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Team.TeamLead)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Team.TeamLead.UserName)
+        </dd>
+    </dl>
+    <hr />
+    <h4>Developers</h4>
+    <hr />
+    <dl class="row">
+        @foreach (var item in Model.TeamDevelopers)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(idem => item.Developer.UserName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(idem => item.Developer.UserName)
+            </dd>
+        }
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Team.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

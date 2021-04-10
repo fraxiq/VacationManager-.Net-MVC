@@ -61,7 +61,8 @@ namespace VacationManager.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -118,16 +119,27 @@ namespace VacationManager.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TeamDevelopers",
+                columns: table => new
+                {
+                    TeamId = table.Column<int>(type: "int", nullable: false),
+                    DeveloperId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeamDevelopers", x => new { x.TeamId, x.DeveloperId });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Teams",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TeamName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TeamLeadId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ProjectID = table.Column<int>(type: "int", nullable: true),
-                    ProjectID1 = table.Column<int>(type: "int", nullable: true),
-                    ProjectID2 = table.Column<int>(type: "int", nullable: true)
+                    TeamLeadID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ProjectID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -135,18 +147,6 @@ namespace VacationManager.Data.Migrations
                     table.ForeignKey(
                         name: "FK_Teams_Projects_ProjectID",
                         column: x => x.ProjectID,
-                        principalTable: "Projects",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Teams_Projects_ProjectID1",
-                        column: x => x.ProjectID1,
-                        principalTable: "Projects",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Teams_Projects_ProjectID2",
-                        column: x => x.ProjectID2,
                         principalTable: "Projects",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
@@ -160,7 +160,6 @@ namespace VacationManager.Data.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TeamID = table.Column<int>(type: "int", nullable: true),
-                    TeamID1 = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -185,23 +184,31 @@ namespace VacationManager.Data.Migrations
                         principalTable: "Teams",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Teams_TeamID1",
-                        column: x => x.TeamID1,
-                        principalTable: "Teams",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
+            migrationBuilder.CreateTable(
+                name: "ProjectTeams",
+                columns: table => new
                 {
-                    { "8d68b117-dae1-4ce3-9447-84a626463454", "0659cc6e-988e-417c-a963-e206483de008", "CEO", "CEO" },
-                    { "12a67bc0-a7d7-4753-90b7-db6c5084913b", "ddcde9d0-9ce3-43a4-9858-923965812849", "Developer", "Developer" },
-                    { "7ce8913d-d178-4a81-a48b-0ca3398da291", "e4437f3a-abaf-451d-8ae7-919354e8ba22", "Team Lead", "Team Lead" },
-                    { "ad886bb3-4f22-48f0-9c23-658fec8dd6f8", "287b0680-1cd8-47f7-b0ac-a55801bd07b3", "Unassigned", "Unassigned" }
+                    TeamID = table.Column<int>(type: "int", nullable: false),
+                    ProjectID = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectTeams", x => new { x.TeamID, x.ProjectID });
+                    table.ForeignKey(
+                        name: "FK_ProjectTeams_Projects_ProjectID",
+                        column: x => x.ProjectID,
+                        principalTable: "Projects",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjectTeams_Teams_TeamID",
+                        column: x => x.TeamID,
+                        principalTable: "Teams",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -227,6 +234,11 @@ namespace VacationManager.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_ApplicationUserId",
+                table: "AspNetUserRoles",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
@@ -242,11 +254,6 @@ namespace VacationManager.Data.Migrations
                 column: "TeamID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_TeamID1",
-                table: "AspNetUsers",
-                column: "TeamID1");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -254,24 +261,32 @@ namespace VacationManager.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProjectTeams_ProjectID",
+                table: "ProjectTeams",
+                column: "ProjectID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeamDevelopers_DeveloperId",
+                table: "TeamDevelopers",
+                column: "DeveloperId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Teams_ProjectID",
                 table: "Teams",
                 column: "ProjectID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Teams_ProjectID1",
+                name: "IX_Teams_TeamLeadID",
                 table: "Teams",
-                column: "ProjectID1");
+                column: "TeamLeadID");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Teams_ProjectID2",
-                table: "Teams",
-                column: "ProjectID2");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Teams_TeamLeadId",
-                table: "Teams",
-                column: "TeamLeadId");
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUserRoles_AspNetUsers_ApplicationUserId",
+                table: "AspNetUserRoles",
+                column: "ApplicationUserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUserRoles_AspNetUsers_UserId",
@@ -306,9 +321,25 @@ namespace VacationManager.Data.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Teams_AspNetUsers_TeamLeadId",
+                name: "FK_TeamDevelopers_AspNetUsers_DeveloperId",
+                table: "TeamDevelopers",
+                column: "DeveloperId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_TeamDevelopers_Teams_TeamId",
+                table: "TeamDevelopers",
+                column: "TeamId",
+                principalTable: "Teams",
+                principalColumn: "ID",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Teams_AspNetUsers_TeamLeadID",
                 table: "Teams",
-                column: "TeamLeadId",
+                column: "TeamLeadID",
                 principalTable: "AspNetUsers",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
@@ -317,7 +348,7 @@ namespace VacationManager.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Teams_AspNetUsers_TeamLeadId",
+                name: "FK_Teams_AspNetUsers_TeamLeadID",
                 table: "Teams");
 
             migrationBuilder.DropTable(
@@ -334,6 +365,12 @@ namespace VacationManager.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "ProjectTeams");
+
+            migrationBuilder.DropTable(
+                name: "TeamDevelopers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

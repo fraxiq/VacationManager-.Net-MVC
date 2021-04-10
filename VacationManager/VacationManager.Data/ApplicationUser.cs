@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace VacationManager.Data
 {
@@ -9,16 +8,13 @@ namespace VacationManager.Data
     {
         public ApplicationUser()
         {
-            this.LedTeams = new HashSet<Team>();
-
+            this.Id = Guid.NewGuid().ToString();
         }
-        
+
+        public virtual ICollection<IdentityUserRole<string>> Roles { get; set; } = new HashSet<IdentityUserRole<string>>();
+
+       
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public virtual Role Role { get; set; }
-        public virtual ICollection<Team> LedTeams { get; set; }
-        public virtual Team Team { get; set; }
-
-
     }
 }
