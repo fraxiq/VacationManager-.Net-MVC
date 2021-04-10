@@ -1,18 +1,26 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VacationManager.Data;
 using VacationManager.Data.Data;
+using VacationManager.Data.Data.Seed;
+using VacationManager.Web.Extensions;
 
 namespace VacationManager.Web
 {
@@ -28,39 +36,37 @@ namespace VacationManager.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
 
             services.AddDbContext<VacationDbContext>(options =>
-    options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+               options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
             services.AddControllersWithViews();
-            services.AddIdentityCore<ApplicationUser>()
-        .AddEntityFrameworkStores<VacationDbContext>();
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+            .AddEntityFrameworkStores<VacationDbContext>();
 
             services.BuildServiceProvider().GetService<VacationDbContext>().Database.EnsureCreated();
-            var context = services.BuildServiceProvider().GetService<VacationDbContext>();
 
-            string[] roles = new string[] { "CEO", "Developer", "Team Lead", "Unassigned" };
+            services.AddRazorPages()
+               .AddMicrosoftIdentityUI();
 
-            var roleStore = new RoleStore<IdentityRole>(context);
-
-            //if (!context.Roles.Any(r => r.Name == "CEO"))
-            //{
-            //    var store = new RoleStore<IdentityRole>(context);
-            //    var manager = new RoleManager<IdentityRole>(store);
-            //    var adminRole = new IdentityRole { Name = "Admin" };
-
-            //    manager.Create(adminRole);
-            //    roleStore.CreateAsync(new IdentityRole("Unassigned"));
-            //    roleStore.CreateAsync(new IdentityRole("CEO"));
-            //    roleStore.CreateAsync(new IdentityRole("Developer"));
-            //    roleStore.CreateAsync(new IdentityRole("Team Lead"));         
-            //}
-
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = new PathString("/Identity/Account/Login");
+                //other properties
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            var seeders = new List<ISeeder>()
+            {
+                new RolesSeeder(),
+                new UsersSeeder(),
+            };
+
+            app.Initialize<VacationDbContext>(seeders);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -75,6 +81,7 @@ namespace VacationManager.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -83,6 +90,7 @@ namespace VacationManager.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

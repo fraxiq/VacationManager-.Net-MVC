@@ -10,7 +10,7 @@ using VacationManager.Data.Data;
 namespace VacationManager.Data.Migrations
 {
     [DbContext(typeof(VacationDbContext))]
-    [Migration("20210409002627_init")]
+    [Migration("20210410131838_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,63 +20,6 @@ namespace VacationManager.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8d68b117-dae1-4ce3-9447-84a626463454",
-                            ConcurrencyStamp = "0659cc6e-988e-417c-a963-e206483de008",
-                            Name = "CEO",
-                            NormalizedName = "CEO"
-                        },
-                        new
-                        {
-                            Id = "12a67bc0-a7d7-4753-90b7-db6c5084913b",
-                            ConcurrencyStamp = "ddcde9d0-9ce3-43a4-9858-923965812849",
-                            Name = "Developer",
-                            NormalizedName = "Developer"
-                        },
-                        new
-                        {
-                            Id = "7ce8913d-d178-4a81-a48b-0ca3398da291",
-                            ConcurrencyStamp = "e4437f3a-abaf-451d-8ae7-919354e8ba22",
-                            Name = "Team Lead",
-                            NormalizedName = "Team Lead"
-                        },
-                        new
-                        {
-                            Id = "ad886bb3-4f22-48f0-9c23-658fec8dd6f8",
-                            ConcurrencyStamp = "287b0680-1cd8-47f7-b0ac-a55801bd07b3",
-                            Name = "Unassigned",
-                            NormalizedName = "Unassigned"
-                        });
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
@@ -156,7 +99,12 @@ namespace VacationManager.Data.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("RoleId");
 
@@ -180,6 +128,33 @@ namespace VacationManager.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("VacationManager.Data.ApplicationRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
                 });
 
             modelBuilder.Entity("VacationManager.Data.ApplicationUser", b =>
@@ -236,9 +211,6 @@ namespace VacationManager.Data.Migrations
                     b.Property<int?>("TeamID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TeamID1")
-                        .HasColumnType("int");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -257,8 +229,6 @@ namespace VacationManager.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("TeamID");
-
-                    b.HasIndex("TeamID1");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -281,6 +251,24 @@ namespace VacationManager.Data.Migrations
                     b.ToTable("Projects");
                 });
 
+            modelBuilder.Entity("VacationManager.Data.ProjectTeams", b =>
+                {
+                    b.Property<int>("TeamID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("TeamID", "ProjectID");
+
+                    b.HasIndex("ProjectID");
+
+                    b.ToTable("ProjectTeams");
+                });
+
             modelBuilder.Entity("VacationManager.Data.Team", b =>
                 {
                     b.Property<int>("ID")
@@ -291,13 +279,7 @@ namespace VacationManager.Data.Migrations
                     b.Property<int?>("ProjectID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProjectID1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProjectID2")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TeamLeadId")
+                    b.Property<string>("TeamLeadID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TeamName")
@@ -307,18 +289,32 @@ namespace VacationManager.Data.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.HasIndex("ProjectID1");
-
-                    b.HasIndex("ProjectID2");
-
-                    b.HasIndex("TeamLeadId");
+                    b.HasIndex("TeamLeadID");
 
                     b.ToTable("Teams");
                 });
 
+            modelBuilder.Entity("VacationManager.Data.TeamDevelopers", b =>
+                {
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DeveloperId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("TeamId", "DeveloperId");
+
+                    b.HasIndex("DeveloperId");
+
+                    b.ToTable("TeamDevelopers");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("VacationManager.Data.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -345,7 +341,11 @@ namespace VacationManager.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("VacationManager.Data.ApplicationUser", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("VacationManager.Data.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -369,13 +369,26 @@ namespace VacationManager.Data.Migrations
 
             modelBuilder.Entity("VacationManager.Data.ApplicationUser", b =>
                 {
-                    b.HasOne("VacationManager.Data.Team", "Team")
+                    b.HasOne("VacationManager.Data.Team", null)
                         .WithMany("Developers")
                         .HasForeignKey("TeamID");
+                });
 
-                    b.HasOne("VacationManager.Data.Team", null)
+            modelBuilder.Entity("VacationManager.Data.ProjectTeams", b =>
+                {
+                    b.HasOne("VacationManager.Data.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("TeamID1");
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VacationManager.Data.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
 
                     b.Navigation("Team");
                 });
@@ -386,26 +399,37 @@ namespace VacationManager.Data.Migrations
                         .WithMany("Teams")
                         .HasForeignKey("ProjectID");
 
-                    b.HasOne("VacationManager.Data.Project", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectID1");
-
-                    b.HasOne("VacationManager.Data.Project", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectID2");
-
                     b.HasOne("VacationManager.Data.ApplicationUser", "TeamLead")
-                        .WithMany("LedTeams")
-                        .HasForeignKey("TeamLeadId");
+                        .WithMany()
+                        .HasForeignKey("TeamLeadID");
 
                     b.Navigation("Project");
 
                     b.Navigation("TeamLead");
                 });
 
+            modelBuilder.Entity("VacationManager.Data.TeamDevelopers", b =>
+                {
+                    b.HasOne("VacationManager.Data.ApplicationUser", "Developer")
+                        .WithMany()
+                        .HasForeignKey("DeveloperId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VacationManager.Data.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Developer");
+
+                    b.Navigation("Team");
+                });
+
             modelBuilder.Entity("VacationManager.Data.ApplicationUser", b =>
                 {
-                    b.Navigation("LedTeams");
+                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("VacationManager.Data.Project", b =>
