@@ -21,6 +21,21 @@ namespace VacationManager.Data.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<ApplicationUser>()
+                .HasOne(u => u.Team)
+                .WithMany(t => t.Developers)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Team>()
+                .HasOne(t => t.TeamLead)
+                .WithMany(u => u.LedTeams)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Project>()
+                .HasMany(p => p.Teams)
+                .WithOne(t => t.Project)
+                .OnDelete(DeleteBehavior.SetNull);
+
             base.OnModelCreating(builder);
             builder.Entity<TeamDevelopers>()
             .HasKey(t => new { t.TeamId, t.DeveloperId });
