@@ -36,8 +36,9 @@ namespace VacationManager.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
 
+            services.AddAuthentication().AddCookie("Cookies");
+            services.AddAuthentication().AddCookie("OpenIdConnect");
             services.AddDbContext<VacationDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
             services.AddControllersWithViews();
