@@ -93,7 +93,21 @@ namespace VacationManager.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
-            });
+            });           
+        }
+        private async Task CreateRoles(IServiceProvider services)
+        {
+            var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+            bool hasRole = await roleManager.RoleExistsAsync("CEO");
+            if (!hasRole)
+            {
+                await roleManager.CreateAsync(new IdentityRole("CEO"));
+            }
+
+            ApplicationUser user = await userManager.FindByEmailAsync("admin@admin.com");
+            await userManager.AddToRoleAsync(user, "CEO");
         }
     }
 }

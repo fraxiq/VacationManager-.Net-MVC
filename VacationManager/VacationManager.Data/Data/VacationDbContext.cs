@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-
+using VacationManager.Data.TimeOff;
 
 namespace VacationManager.Data.Data
 {
@@ -52,12 +52,10 @@ namespace VacationManager.Data.Data
 
         public virtual DbSet<TeamDevelopers> TeamDevelopers { get; set; }
         public virtual DbSet<ProjectTeams> ProjectTeams { get; set; }
+        public virtual DbSet<PaidTimeOff> PaidTimeOffs { get; set; }
 
+        public virtual DbSet<UnpaidTimeOff> UnpaidTimeOffs { get; set; }
 
-        //public virtual DbSet<PaidTimeOff> PaidTimeOffs { get; set; }
-
-        //public virtual DbSet<UnpaidTimeOff> UnpaidTimeOffs { get; set; }
-
-        //public virtual DbSet<SickTimeOff> SickTimeOffs { get; set; }
+        public virtual DbSet<SickTimeOff> SickTimeOffs { get; set; }
     }
 }

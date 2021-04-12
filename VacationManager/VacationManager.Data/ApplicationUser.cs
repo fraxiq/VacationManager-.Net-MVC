@@ -20,10 +20,7 @@ namespace VacationManager.Data
 
        
         public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string UserN { get; set; }
-
-        public string PassW { get; set; }
+        public string LastName { get; set; }       
         public virtual Team Team { get; set; }
         public virtual ICollection<Team> LedTeams { get; set; }
         public virtual ICollection<PaidTimeOff> PaidTimeOffRequests { get; set; }
