@@ -1,4 +1,4 @@
-﻿namespace API.Models.ViewModels
+﻿namespace VacationManager.Web.Models
 {
     public class LoginVM
     {

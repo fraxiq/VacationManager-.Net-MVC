@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using VacationManager.Data.Data;
 using VacationManager.Data.TimeOff;
+using VacationManager.Web.Models;
+using VacationManager.Web.Models.Filters;
+using VacationManager.Web.Models.TimeOffViewModels;
 
 namespace VacationManager.Web.Controllers
 {
@@ -26,6 +30,66 @@ where T : class
         {
             return View("../TimeOffs/Index", await _items.ToListAsync());
         }
+
+        //Add Create Functionality
+        public IActionResult Create()
+        {     
+            return View("../TimeOffs/Create");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(BaseTimeOffViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                PaidTimeOff timeOff = new PaidTimeOff()
+                {
+                    From = model.From,
+                    To= model.To,
+                    CreatedOn = model.CreatedOn,
+                    IsHalfDay = model.IsHalfDay,
+                    IsApproved = model.IsApproved,
+                    Requestor = model.Requestor
+                };
+
+                _context.Add(timeOff);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+
+
+        private static string SaveFile(IFormFile file)
+        {
+            var fileName = Path.GetFileName(file.FileName);
+            var extension = fileName.Split('.').Last();
+            var fileNameWithoutExtension = string.Join("", fileName.Split('.').Take(fileName.Length - 1));
+
+            var newfileName = "wwwroot/images/" + string.Format("{0}-{1:ddMMYYYYHHmmss}.{2}",
+                fileNameWithoutExtension,
+                DateTime.Now,
+                extension
+            );
+
+            if (!Directory.Exists(Path.GetDirectoryName(newfileName)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(newfileName));
+            }
+
+            using (var localFile = System.IO.File.OpenWrite(newfileName))
+            {
+                using (var uploadedFile = file.OpenReadStream())
+                {
+                    uploadedFile.CopyTo(localFile);
+                }
+            }
+
+            return newfileName;
+        }
+
         [HttpGet]
         public ActionResult Edit(int? id)
         {
@@ -37,7 +101,7 @@ where T : class
 
             _context.Dispose();
 
-            return View(timeOff);
+            return View("../TimeOffs/EditPaid");
         }
 
         [HttpPost]
@@ -47,7 +111,7 @@ where T : class
             _context.SaveChanges();
             _context.Dispose();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("../TimeOffs/EditPaid");
         }
 
         [HttpGet]
@@ -59,6 +123,51 @@ where T : class
             _context.Dispose();
 
             return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var team = await _context.PaidTimeOffs
+                .FirstOrDefaultAsync(m => m.id == id);
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            return View("../TimeOffs/Delete");
+        }
+
+        // POST: Teams/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var paidTimeOff = await _context.PaidTimeOffs.FindAsync(id);
+            _context.PaidTimeOffs.Remove(paidTimeOff);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool PaidTimeOffExists(int id)
+        {
+            return _context.Teams.Any(e => e.ID == id);
+        }
+
+
+        [HttpGet]
+        public ActionResult Approve(int id)
+        {
+            VacationDbContext context = new VacationDbContext();
+            BaseTimeOff timeOff = context.PaidTimeOffs.Find(id);
+            timeOff.IsApproved = true;
+            context.SaveChanges();
+            context.Dispose();
+
+            return RedirectToAction("../TimeOffs/AllTimeOffs");
         }
     }
 }
