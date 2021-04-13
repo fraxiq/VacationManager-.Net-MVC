@@ -8,12 +8,11 @@ using VacationManager.Data.TimeOff;
 
 namespace VacationManager.Web.Controllers
 {
-    public class UnpaidTimeOffController : TimeOffController<UnpaidTimeOff>
+    public class SickTimeOffController : TimeOffController<PaidTimeOff>
     {
-        public UnpaidTimeOffController(VacationDbContext context) : base(context, context.UnpaidTimeOffs)
+        public SickTimeOffController(VacationDbContext context) : base(context, context.PaidTimeOffs)
         {
 
         }
-        
     }
 }

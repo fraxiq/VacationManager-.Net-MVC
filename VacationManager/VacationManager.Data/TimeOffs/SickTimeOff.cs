@@ -10,6 +10,7 @@ namespace VacationManager.Data.TimeOff
     public class SickTimeOff : BaseTimeOff
     {
         public string AttachmentPath { get; set; }
+        public string Attachment { get; set; }
 
         [NotMapped]
         public override bool IsHalfDay { get; set; }

@@ -1,5 +1,3 @@
-using System;
-
 namespace VacationManager.Web.Models
 {
     public class ErrorViewModel
