@@ -42,8 +42,11 @@ namespace VacationManager.Web
             services.AddDbContext<VacationDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
             services.AddControllersWithViews();
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-            .AddEntityFrameworkStores<VacationDbContext>();
+            services.AddIdentity<ApplicationUser, ApplicationRole>
+               (options => options.SignIn.RequireConfirmedAccount = true)
+              .AddDefaultTokenProviders()
+              .AddDefaultUI()
+             .AddEntityFrameworkStores<VacationDbContext>();
 
             services.BuildServiceProvider().GetService<VacationDbContext>().Database.EnsureCreated();
 

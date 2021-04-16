@@ -41,12 +41,10 @@ namespace VacationManager.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required]          
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
-            [Required]
-            [EmailAddress]
+            [Required]          
             [Display(Name = "Last Name")]
             public string LastName { get; set; }      
             [Required]
@@ -78,7 +76,7 @@ namespace VacationManager.Web.Areas.Identity.Pages.Account
             
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FirstName= Input.FirstName, LastName = Input.LastName };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
