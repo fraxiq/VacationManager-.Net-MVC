@@ -7,8 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using VacationManager.Data.Data;
 using VacationManager.Data.TimeOff;
-using VacationManager.Web.Models;
-using VacationManager.Web.Models.Filters;
 using VacationManager.Web.Models.TimeOffViewModels;
 
 namespace VacationManager.Web.Controllers
@@ -17,6 +15,7 @@ namespace VacationManager.Web.Controllers
 where T : class
     {
         private readonly VacationDbContext _context;
+        
 
         private DbSet<T> _items;
         public TimeOffController(VacationDbContext context, DbSet<T> items)
@@ -48,7 +47,7 @@ where T : class
                 {
                     From = model.From,
                     To= model.To,
-                    CreatedOn = model.CreatedOn,
+                    CreatedOn = DateTime.Now,
                     IsHalfDay = model.IsHalfDay,
                     IsApproved = model.IsApproved,
                     Requestor = model.Requestor
@@ -111,7 +110,7 @@ where T : class
             _context.SaveChanges();
             _context.Dispose();
 
-            return RedirectToAction("../TimeOffs/EditPaid");
+            return RedirectToAction("../TimeOffs/Index");
         }
 
         [HttpGet]
@@ -167,7 +166,7 @@ where T : class
             context.SaveChanges();
             context.Dispose();
 
-            return RedirectToAction("../TimeOffs/AllTimeOffs");
+            return RedirectToAction("../TimeOffs/Index");
         }
     }
 }
