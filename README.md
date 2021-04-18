@@ -32,8 +32,8 @@
 #  **Summary**<br/>
 <br>The Vacation Manager project is a starting point for turning it in real usage basis. It's functionalities cover most of the attended. The project is still in development.<br/>
 
-* **Team**<br/>
+* # **Team**<br/>
 	* Aleksandar Marinov<br/>
 	* Aleksandar Stankov<br/>
-* **License**<br/>
+* # **License**<br/>
 	* Vacation Manager is distributed under the GNU General Public License, see the file LICENSE for details.<br/>
