@@ -15,8 +15,8 @@
 	* An admin account is seeded with login credentials admin for username and Admin123! for password.<br/>
 	 
 
-# **Data Layer**<br/>
-----------------------------------------------------------------------
+- # **Data Layer**<br/>
+
 	- MSSQL Server Database<br/>
 	- Migrations<br/>
 	- Razor Pages<br/>
