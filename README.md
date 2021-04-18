@@ -17,11 +17,11 @@
 
 # **Data Layer**<br/>
 ----------------------------------------------------------------------
-	* MSSQL Server Database<br/>
-	* Migrations<br/>
-	* Razor Pages<br/>
-	* Automated data seeding on database creation<br/>
-	* Database is seeded upon creation<br/>
+	- MSSQL Server Database<br/>
+	- Migrations<br/>
+	- Razor Pages<br/>
+	- Automated data seeding on database creation<br/>
+	- Database is seeded upon creation<br/>
  # **Service Layer**<br/>
  ----------------------------------------------------------------------
 	* Identity<br/>
