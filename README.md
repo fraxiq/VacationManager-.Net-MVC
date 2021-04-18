@@ -9,10 +9,11 @@
 
  # **Note before download and usage**<br/>
 ----------------------------------------------
-		* The project relies on local SQL server and is using it's services.<br/>
-		* The project requires Microsoft SQL Server Management Studio (SSMS) in order to boot up the site.<br/>
-		* There might be a few bugs but they will be fixed in the next release.<br/>
-		* An admin account is seeded with login credentials admin for username and Admin123! for password.<br/>
+	* The project relies on local SQL server and is using it's services.<br/>
+	* The project requires Microsoft SQL Server Management Studio (SSMS) in order to boot up the site.<br/>
+	* There might be a few bugs but they will be fixed in the next release.<br/>
+	* An admin account is seeded with login credentials admin for username and Admin123! for password.<br/>
+		*	 
 
 * # **Data Layer**<br/>
 	* MSSQL Server Database<br/>
