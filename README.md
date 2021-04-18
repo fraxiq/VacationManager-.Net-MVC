@@ -1,10 +1,10 @@
 # Vacation Manager
 <br>Web application to serve as a vacation manager, handling time offs, teams, project and users.<br/>
 
-<br>**Description**<br/>
+# **Description**<br/>
 <br>Made as a course project for IT Career National Programme Module 13 "Software Engineering" by Aleksandar Marinov and Aleksandar Stankov.<br/>
 
-<br>**Details**<br/>
+# **Details**<br/>
 <br>The application is capable of assigning teams and projects. Every registered user is capable of joining a team, working on a project or taking a break from work. Sending a request for a time off can be done by anyone and is approved by a CEO. Every project or team can be edited or deleted as well.<br/>
 
 # **Note before download and usage**<br/>
