@@ -7,11 +7,11 @@
 <br>**Details**<br/>
 <br>The application is capable of assigning teams and projects. Every registered user is capable of joining a team, working on a project or taking a break from work. Sending a request for a time off can be done by anyone and is approved by a CEO. Every project or team can be edited or deleted as well.<br/>
 
-*<br>**Note before download and usage**<br/>
-		*<br> The project relies on local SQL server and is using it's services.<br/> 
-		*<br> The project requires Microsoft SQL Server Management Studio (SSMS) in order to boot up the site.<br/> 
-		*<br> There might be a few bugs but they will be fixed in the next release.<br/>
-		*<br> An admin account is seeded with login credentials admin for username and Admin123! for password.<br/>
+* <br>**Note before download and usage**<br/>
+		* <br> The project relies on local SQL server and is using it's services.<br/> 
+		* <br> The project requires Microsoft SQL Server Management Studio (SSMS) in order to boot up the site.<br/> 
+		* <br> There might be a few bugs but they will be fixed in the next release.<br/>
+		* <br> An admin account is seeded with login credentials admin for username and Admin123! for password.<br/>
 
 <br>* **Data Layer**<br/>
 		<br>* MSSQL Server Database<br/>
