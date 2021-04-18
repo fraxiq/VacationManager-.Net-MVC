@@ -14,7 +14,7 @@
 		* There might be a few bugs but they will be fixed in the next release.<br/>
 		* An admin account is seeded with login credentials admin for username and Admin123! for password.<br/>
 
-* #**Data Layer**
+* #**Data Layer**#
 	* MSSQL Server Database<br/>
 	* Migrations<br/>
 	* Razor Pages<br/>
