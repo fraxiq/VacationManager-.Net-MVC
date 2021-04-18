@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @model VacationManager.Data.TimeOff.SickTimeOff
+
+     
+        ViewData["Title"] = "Create Sick";
+    
+
+    <h1>Create</h1>
+
+    <h4>Time off</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.From)
+                    @Html.EditorFor(model => model.From, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "date" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.To)
+                    @Html.EditorFor(model => model.To, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "date" } })
+                </div>
+                <div class="form-group">
+                    <label asp-for="Attachment" class="control-label"></label>
+                    <input type="file" asp-for="Attachment" />
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsHalfDay)
+                    @Html.EditorFor(model => model.IsHalfDay, new { htmlAttributes = new { @class = "form-control form-control-user" } })
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+
+    
+}

@@ -1,5 +1,4 @@
-﻿@model VacationManager.Data.TimeOff.BaseTimeOff
-
+﻿@model VacationManager.Web.Models.TimeOffViewModels.PaidTimeOffs.PaidTimeOffsEditVM
 @{ ViewData["Title"] = "Edit"; }
 
 <div class="container">
@@ -11,7 +10,7 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Edit PTO!</h1>
                         </div>
-                        @using (Html.BeginForm("EditPaid","PaidTimeOff", FormMethod.Post, new { @class = "user" }))
+                        @using (Html.BeginForm("EditPaid", "PaidTimeOff", FormMethod.Post, new { @class = "user" }))
                         {
             <div class="form-group">
                 @Html.LabelFor(model => model.From)
