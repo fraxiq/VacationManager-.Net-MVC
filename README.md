@@ -39,4 +39,4 @@
 * Aleksandar Marinov<br/>
 * Aleksandar Stankov<br/>
 # **License**<br/>
-* Vacation Manager is distributed under the GNU General Public License, see the file LICENSE for details.<br/>
+Vacation Manager is distributed under the GNU General Public License, see the file LICENSE for details.<br/>
