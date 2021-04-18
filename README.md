@@ -15,13 +15,12 @@
 	* An admin account is seeded with login credentials admin for username and Admin123! for password.<br/>
 	 
 
-- # **Data Layer**<br/>
-
-	- MSSQL Server Database<br/>
-	- Migrations<br/>
-	- Razor Pages<br/>
-	- Automated data seeding on database creation<br/>
-	- Database is seeded upon creation<br/>
+ # **Data Layer**<br/>
+- MSSQL Server Database<br/>
+- Migrations<br/>
+- Razor Pages<br/>
+- Automated data seeding on database creation<br/>
+- Database is seeded upon creation<br/>
  * # **Service Layer**<br/>
 	* Identity<br/>
 	* SQL server (MYSQLSERVER)<br/>
