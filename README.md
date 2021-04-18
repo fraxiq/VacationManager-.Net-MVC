@@ -11,7 +11,7 @@ Note before download and usage
 	-> The project relies on local SQL server and is using it's services. 
 	-> The project requires Microsoft SQL Server Management Studio (SSMS) in order to boot up the site. 
 	-> There might be a few bugs but they will be fixed in the next release.
-	-> An admin account is seeded with login credentials admin@admin.com for username and Admin123! for password.
+	-> An admin account is seeded with login credentials admin for username and Admin123! for password.
 
 Data Layer
 	-> MSSQL Server Database
