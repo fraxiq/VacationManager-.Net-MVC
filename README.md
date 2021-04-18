@@ -1,40 +1,40 @@
 # Vacation Manager
-Web application to serve as a vacation manager, handling time offs, teams, project and users.
+<br>Web application to serve as a vacation manager, handling time offs, teams, project and users.<br/>
 
-Description
-Made as a course project for IT Career National Programme Module 13 "Software Engineering" by Aleksandar Marinov and Aleksandar Stankov.
+<br>**Description**<br/>
+<br>Made as a course project for IT Career National Programme Module 13 "Software Engineering" by Aleksandar Marinov and Aleksandar Stankov.<br/>
 
-Details
-The application is capable of assigning teams and projects. Every registered user is capable of joining a team, working on a project or taking a break from work. Sending a request for a time off can be done by anyone and is approved by a CEO. Every project or team can be edited or deleted as well.
+<br>**Details**<br/>
+<br>The application is capable of assigning teams and projects. Every registered user is capable of joining a team, working on a project or taking a break from work. Sending a request for a time off can be done by anyone and is approved by a CEO. Every project or team can be edited or deleted as well.<br/>
 
-Note before download and usage
-	-> The project relies on local SQL server and is using it's services. 
-	-> The project requires Microsoft SQL Server Management Studio (SSMS) in order to boot up the site. 
-	-> There might be a few bugs but they will be fixed in the next release.
-	-> An admin account is seeded with login credentials admin for username and Admin123! for password.
+<br>**Note before download and usage**<br/>
+	<br>-> The project relies on local SQL server and is using it's services.<br/> 
+	<br>-> The project requires Microsoft SQL Server Management Studio (SSMS) in order to boot up the site.<br/> 
+	<br>-> There might be a few bugs but they will be fixed in the next release.<br/>
+	<br>-> An admin account is seeded with login credentials admin for username and Admin123! for password.<br/>
 
-Data Layer
-	-> MSSQL Server Database
-	-> Migrations
-	-> Razor Pages
-	-> Automated data seeding on database creation
-	-> Database is seeded upon creation
+<br>**Data Layer**<br/>
+	<br>-> MSSQL Server Database<br/>
+	<br-> Migrations<br/>
+	<br>-> Razor Pages<br/>
+	<br>-> Automated data seeding on database creation<br/>
+	<br>-> Database is seeded upon creation<br/>
 
-Service Layer
-	-> Identity
-	-> SQL server (MYSQLSERVER)
+<br>**Service Layer**<br/>
+	<br>-> Identity<br/>
+	<br>-> SQL server (MYSQLSERVER)<br/>
 
-Presentation Layer
+<br>**Presentation Layer**<br/>
 
-	-> ASP.NET 5
-	-> Data validation	
-	-> New user friendly
+	<br> ASP.NET 5<br/>
+	<br>Data validation<br/>	
+	<br> New user friendly<br/>
 
-Summary
-The Vacation Manager project is a starting point for turning it in real usage basis. It's functionalities cover most of the attended. The project is still in development.
+<br>**Summary**<br/>
+<br>The Vacation Manager project is a starting point for turning it in real usage basis. It's functionalities cover most of the attended. The project is still in development.<br/>
 
-Team	
-	-> Aleksandar Marinov
-	-> Aleksandar Stankov
-License
-	Vacation Manager is distributed under the GNU General Public License, see the file LICENSE for details.
+<br>**Team**<br/>
+	<br>-> Aleksandar Marinov<br/>
+	<br>-> Aleksandar Stankov<br/>
+<br>**License**<br/>
+	<br>Vacation Manager is distributed under the GNU General Public License, see the file LICENSE for details.<br/>
