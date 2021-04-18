@@ -25,10 +25,10 @@
 		<br>-> SQL server (MYSQLSERVER)<br/>
 	
 <br>**Presentation Layer**<br/>
-
-	<br>ASP.NET 5<br/>
-	<br>Data validation<br/>	
-	<br>New user friendly<br/>
+<br>
+	<br>->ASP.NET 5<br/>
+	<br>->Data validation<br/>	
+	<br>->New user friendly<br/>
 
 <br>**Summary**<br/>
 <br>The Vacation Manager project is a starting point for turning it in real usage basis. It's functionalities cover most of the attended. The project is still in development.<br/>
